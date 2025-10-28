@@ -1,0 +1,668 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Log In — Off the Shelf</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --gold: #f1d687ff;
+    --maroon: #8A0808;
+    --green: #2e6f4a;
+    --bg: #fbfbfb;
+    --card: #ffffff;
+    --muted: #59606a;
+    --maxw: 1200px;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: #0f1724;
+    line-height: 1.6;
+  }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    background: linear-gradient(90deg, #2e6f4a 40%, #f1d687ff 100%);
+    color: white;
+    padding: 18px 24px;
+    box-shadow: 0 5px 18px rgba(10, 10, 10, 0.15);
+  }
+  .site-header .inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .brand {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .brand img {
+    height: 56px;
+    width: 56px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 6px;
+  }
+  .brand h1 {
+    margin: 0;
+    font-size: 20px;
+    color: var(--gold);
+  }
+  .brand p {
+    margin: 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  nav {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+  }
+  nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  nav a:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* ===== VIDEO SECTION ===== */
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+
+  .video-container video {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .overlay-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    color: white;
+    text-align: left;
+    padding: 20px 40px;
+    pointer-events: none;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+    box-sizing: border-box;
+  }
+
+  .overlay-text img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+    flex-shrink: 1;
+    transition: all 0.3s ease;
+  }
+
+  .overlay-text .text-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    margin-right: 60px;
+    transition: margin 0.3s ease;
+  }
+
+  .overlay-text h2 {
+    font-size: 32px;
+    color: var(--gold);
+    margin: 0 0 10px 0;
+  }
+
+  .overlay-text p {
+    color: #f0e68c;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  /* ===== LOGIN CARD (from reference code) ===== */
+    .login-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 0;
+    }
+
+    .login-card {
+      background: white;
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
+      border: 2px solid #0c5b2f;
+    }
+
+    .login-card img {
+      height: 70px;
+      margin-bottom: 14px;
+    }
+
+    .login-card h1 {
+      color: #0c5b2f;
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .login-card p {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 24px;
+    }
+
+   .login-card input {
+      display: block;
+      width: 100%;
+      box-sizing: border-box; /* ✅ ensures same exact width as button */
+      padding: 12px 14px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      font-size: 14px;
+}
+
+
+    .login-card button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #F2C94C;
+      color: #14532D;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 15px;
+      box-shadow: 0 6px 12px rgba(242, 201, 76, 0.25);
+      transition: background 0.2s;
+    }
+
+    .login-card button:hover {
+      background: #e6b93d;
+    }
+
+    .login-card .muted {
+      font-size: 13px;
+      margin-top: 14px;
+      color: #777;
+    }
+
+  /* ===== FOOTER ===== */
+  .site-footer {
+    background: var(--green);
+    margin: 0;
+    padding: 18px 24px;
+    box-shadow: 0 6px 20px rgba(10, 10, 10, 0.04);
+    border-top: 6px solid var(--gold);
+    color: white;
+  }
+  .site-footer .inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .site-footer .brandline {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .site-footer img {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  /* Loader Overlay */
+    #loader {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: url("plm-campus.jpg") no-repeat center center/cover;
+      z-index: 9999;
+    }
+
+    /* Tint Overlay for loader */
+    #loader::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(20, 83, 45, 0.40); 
+    }
+
+    .loader-container {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .loader-container img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.7; }
+    }
+
+    .ring {
+      position: absolute;
+      border: 1.5px solid green;
+      border-radius: 50%;
+      border-top-color: transparent;
+      border-left-color: transparent;
+    }
+
+    .ring:nth-child(2) {
+      width: 115px;
+      height: 115px;
+      border-color: gold;
+      border-top-color: transparent;
+      border-left-color: transparent;
+      animation: spin 2s linear infinite;
+    }
+
+    .ring:nth-child(3) {
+      width: 100px;
+      height: 100px;
+      animation: spin 3s linear infinite;
+    }
+
+    .ring:nth-child(4) {
+      width: 130px;
+      height: 130px;
+      animation: spin 4s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <div class="brand">
+      <img src="cnlogo.png" alt="PLM CN Logo"/>
+      <div>
+        <h1>Off the Shelf — Log In</h1>
+        <p>Pamantasan ng Lungsod ng Maynila, College of Nursing</p>
+      </div>
+    </div>
+    <nav>
+      <a href="select_role.html">Return</a>
+    </nav>
+  </div>
+</header>
+
+<section class="video-container">
+  <video autoplay loop muted playsinline>
+    <source src="Video display 2.mov" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  <section class="overlay-text">
+    <img src="logo-only.png" alt="Logo"/>
+    <div>
+      <h2>Off the Shelf</h2>
+      <p>Off the Shelf is a digital repository of first-year nursing students in Pamantasan ng Lungsod ng Maynila. It serves as a collection of demonstration videos, lecture lessons and case studies covering subjects in the first-year nursing curriculum.</p>
+    </div>
+  </section>
+</section>
+
+<!-- ✅ LOGIN CARD (replaced with reference version) -->
+<div class="login-container">
+  <div class="login-card" id="loginCard">
+    <img src="cn-logo.png" alt="PLM CN Logo">
+    <h1>College of Nursing</h1>
+    <p>Off the Shelf — E-Learning Repository</p>
+
+    <!-- Error message -->
+    <div id="errorMsg" style="color:red; font-weight:bold; margin-bottom:10px; display:none;"></div>
+
+    <form id="loginForm">
+      <input type="text" id="userId" placeholder="User ID" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+      <div class="muted">Use your assigned PLM CN account</div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // All valid logins
+  const validLogins = {
+    // Admins
+    "PLM CN 1st Year": "plmcn2025_1styearstudent",
+    "PLM CN Admin": "plmcn2025_prototypecommittee",
+    "mptirazona": "TIRAZONA_plmcn2025",
+    "kzarbo": "ARBO_plmcn2025",
+    "fsmercado": "MERCADO_plmcn2025",
+    "dprramos": "RAMOS_plmcn2025",
+
+    // Students
+    "202511696": "AGOTO_202511696",
+    "202511701": "AVILA_202511701",
+    "202511713": "BARBOSA_202511713",
+    "202400316": "BUALAN_202400316",
+    "202511704": "CAMACHO_202511704",
+    "202511711": "CANO_202511711",
+    "202511681": "CECILIO_202511681",
+    "202511689": "CLAMONTE_202511689",
+    "202511714": "CUNANAN_202511714",
+    "202511700": "DADOR_202511700",
+    "202511690": "DATUL_202511690",
+    "202511692": "DELA CRUZ_202511692",
+    "202511691": "DISTOR_202511691",
+    "202511698": "ESERJOSE_202511698",
+    "202511687": "FLORES_202511687",
+    "202511710": "GONZALES_202511710",
+    "202511707": "HERNANDEZ_202511707",
+    "202412745": "IRINGAN_202412745",
+    "202511706": "LAGASCA_202511706",
+    "202400367": "LAPUT_202400367",
+    "202511708": "LEGITIMAS_202511708",
+    "202511716": "LEODONES_202511716",
+    "202511832": "LEOPANDO_202511832",
+    "202411703": "LIWANAGAN_202411703",
+    "202511697": "MACATANGAY_202511697",
+    "202521339": "MARAVILLA_202521339",
+    "202511709": "OLANIO_202511709",
+    "202511683": "PALMA_202511683",
+    "202511688": "PAULE_202511688",
+    "202511836": "PEDREZA_202511836",
+    "202511694": "QUINTAL_202511694",
+    "202511705": "RABANO_202511705",
+    "202511693": "RAMISO_202511693",
+    "202511699": "RIVERA_202511699",
+    "202511695": "ROCE_202511695",
+    "202511682": "SALAMAT_202511682",
+    "202511829": "SORIANO_202511829",
+    "202511703": "TABES_202511703",
+    "202511684": "TAMBA_202511684",
+    "202511712": "TAVAS_202511712",
+    "202511685": "USI_202511685",
+    "202511730": "VIERNEZA_202511730",
+    "202412360": "VITTO_202412360",
+    "202511665": "ABLOG_202511665",
+    "202511672": "AGUILAR_202511672",
+    "202512124": "BARRERA_202512124",
+    "202411951": "BAUTISTA_202411951",
+    "202511653": "BAYLON_202511653",
+    "202511657": "CACULITAN_202511657",
+    "202511654": "CALIMOTAN_202511654",
+    "202511663": "CANLAS_202511663",
+    "202511647": "CARBONELL_202511647",
+    "202400338": "CORNEJO_202400338",
+    "202410369": "CORRAL_202410369",
+    "202511648": "CORTEZ_202511648",
+    "202511650": "COSMO_202511650",
+    "202511668": "CRISOSTOMO_202511668",
+    "202511656": "DAVID_202511656",
+    "202511823": "DE GUZMAN_202511823",
+    "202511674": "DELA CRUZ_202511674",
+    "202511667": "DELA CRUZ_202511667",
+    "202511664": "DEMATE_202511664",
+    "202511830": "DOMINGO_202511830",
+    "202511678": "ESPAÑOLA_202511678",
+    "202511666": "GALVAN_202511666",
+    "202511659": "GUCE_202511659",
+    "202511655": "LORENZO_202511655",
+    "202511649": "MAGLAYA_202511649",
+    "202511677": "MANANSALA_202511677",
+    "202511644": "NAZARRO_202511644",
+    "202511662": "OCATE_202511662",
+    "202511673": "PARDILLA_202511673",
+    "202511676": "PELAYO_202511676",
+    "202511645": "PEÑAFLOR_202511645",
+    "202511646": "SALVADOR_202511646",
+    "202511660": "SAN PEDRO_202511660",
+    "202511680": "SANTIAGO_202511680",
+    "202511658": "SANTOS_202511658",
+    "202511661": "TADAMASA_202511661",
+    "202412106": "TRASPICE_202412106",
+    "202511675": "VILLAFLOR_202511675",
+    "202511835": "ADENIC_202511835",
+    "202511758": "ALIPONGAN_202511758",
+    "202511723": "ARGAMOZA_202511723",
+    "202511759": "BATU_202511759",
+    "202511679": "BAUIT_202511679",
+    "202511717": "CHUA_202511717",
+    "202511831": "CORPUZ_202511831",
+    "202511747": "DALUMPINES_202511747",
+    "202511751": "DELA PEÑA_202511751",
+    "202511768": "DINGLASAN_202511768",
+    "202511724": "ESTOLE_202511724",
+    "202511756": "ESTRELLA_202511756",
+    "202511754": "FRANCO_202511754",
+    "202511721": "GARCIA_202511721",
+    "202511722": "JAPOR_202511722",
+    "202511745": "LAPID_202511745",
+    "202411733": "LAPUZ_202411733",
+    "202511749": "LAYRON_202511749",
+    "202511575": "LUMBA_202511575",
+    "202511757": "MACARAEG_202511757",
+    "202511746": "MALIBIRAN_202511746",
+    "202511753": "MENDOZA_202511753",
+    "202522105": "MOLANO_202522105",
+    "202400373": "MOLO_202400373",
+    "202511822": "NAVERO_202511822",
+    "202511764": "NAVIAMOS_202511764",
+    "202511719": "PADERES_202511719",
+    "202511761": "PANGANIBAN_202511761",
+    "202511720": "PANGILINAN_202511720",
+    "202511770": "PARONG_202511770",
+    "202511744": "PURA_202511744",
+    "202511750": "RAMOS_202511750",
+    "202511765": "RAMOS_202511765",
+    "202511762": "RAMOS_202511762",
+    "202511767": "RELOX_202511767",
+    "202511769": "REMOLLENA_202511769",
+    "202411917": "REYES_202411917",
+    "202511743": "RIBON_202511743",
+    "202511748": "SALANGSANG_202511748",
+    "202511760": "SAMERA_202511760",
+    "202511833": "SIENA_202511833",
+    "202511718": "SORIANO_202511718",
+    "202400638": "UNDAG_202400638",
+    "202511763": "YABUT_202511763",
+    "202511828": "ALJECERA_202511828",
+    "202511827": "ALVERO_202511827",
+    "202511777": "AMBAY_202511777",
+    "202511725": "BAGAMASPAD_202511725",
+    "202511732": "BAYAN_202511732",
+    "202511771": "BRUAN_202511771",
+    "202521190": "CAAMPUED_202521190",
+    "202511727": "CAPERLAC_202511727",
+    "202511726": "CARLOS_202511726",
+    "202511813": "DELA CRUZ_202511813",
+    "202511736": "DEMERIN_202511736",
+    "202412499": "DIMALANTA_202412499",
+    "202511775": "DUMPIT_202511775",
+    "202511781": "ELPEDES_202511781",
+    "202511774": "ESCUETA_202511774",
+    "202511739": "ESTONILO_202511739",
+    "202511780": "ERNACIO_202511780",
+    "202511815": "FORONDA_202511815",
+    "202511734": "GURO_202511734",
+    "202511738": "JANDUGAN_202511738",
+    "202511782": "LACSON_202511782",
+    "202412696": "LOPEZ_202412696",
+    "202521165": "LUPOS_202521165",
+    "202511731": "MANINANG_202511731",
+    "202511819": "MIRAFUENTES_202511819",
+    "202511740": "MOLINOS_202511740",
+    "202511779": "MONTEREY_202511779",
+    "202511735": "MURCILLO_202511735",
+    "202511733": "NIVAL_202511733",
+    "202511817": "ORIAS_202511817",
+    "202511776": "PINEDA_202511776",
+    "202511773": "PUNZALAN_202511773",
+    "202411822": "REYES_202411822",
+    "202511821": "REYES_202511821",
+    "202511772": "RINCORAYA_202511772",
+    "202511741": "RIVEZA_202511741",
+    "202411997": "SISON_202411997",
+    "202511728": "SOLIS_202511728",
+    "202511737": "SOLIVA_202511737",
+    "202511752": "TABERNERO_202511752",
+    "202511729": "VILLAFLORES_202511729",
+    "202511778": "ZIGANAY_202511778",
+    "202511790": "ALMARIO_202511790",
+    "202511784": "BABIDA_202511784",
+    "202511824": "BACOLOD_202511824",
+    "202412549": "BERGADO_202412549",
+    "202511825": "BONSOL_202511825",
+    "202511804": "CAUDAL_202511804",
+    "202511811": "CEBALLOS_202511811",
+    "202511800": "CEBEDO_202511800",
+    "202511826": "CIPRIANO_202511826",
+    "202511816": "CROM_202511816",
+    "202511808": "DE LEMON_202511808",
+    "202511792": "DELA PEÑA_202511792",
+    "202511791": "ESCANER_202511791",
+    "202412439": "ESCANO_202412439",
+    "202337044": "FRANCIA_202337044",
+    "202511812": "GRIMES_202511812",
+    "202511785": "IPORAC_202511785",
+    "202511802": "LAO_202511802",
+    "202511801": "LAYCANO_202511801",
+    "202410922": "LICUANAN_202410922",
+    "202410932": "MALABANAN_202410932",
+    "202511803": "MALICDEM_202511803",
+    "202511810": "MOJICA_202511810",
+    "202511807": "MENDOZA_202511807",
+    "202511793": "NIZ_202511793",
+    "202511789": "OCHENTA_202511789",
+    "202511797": "OCSON_202511797",
+    "202511783": "PERALES_202511783",
+    "202511796": "PION_202511796",
+    "202511806": "POBLACION_202511806",
+    "202511799": "RAMOS_202511799",
+    "202511820": "RAMOS_202511820",
+    "202511814": "RICE_202511814",
+    "202511788": "ROXAS_202511788",
+    "202511805": "SIBUG_202511805",
+    "202511809": "SIMEON_202511809",
+    "202511818": "UMPAD_202511818",
+    "202511787": "VEGA_202511787",
+    "202511834": "VERGARA_202511834",
+    "202511794": "ZAMORA_202511794",
+    "202111343": "QUINQUITO_202111343",
+    "202112268": "QUINES_202112268"
+  };
+
+  // Redirect pages
+  const redirectPages = {};
+  Object.keys(validLogins).forEach(id => {
+    if (["PLM CN Admin","mptirazona","kzarbo","fsmercado","dprramos"].includes(id)) {
+      redirectPages[id] = "admin_dashboard.html";
+    } else {
+      redirectPages[id] = "student_dashboard.html";
+    }
+  });
+
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // prevent page reload
+
+    const id = document.getElementById('userId').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const errorDiv = document.getElementById('errorMsg');
+
+    if (validLogins[id] && validLogins[id] === password) {
+      errorDiv.style.display = 'none';
+      window.location.href = redirectPages[id];
+    } else {
+      errorDiv.textContent = "Invalid User ID or Password";
+      errorDiv.style.display = "block";
+    }
+  });
+</script>
+
+  
+<footer class="site-footer">
+  <div class="inner">
+    <div class="brandline">
+      <img src="cnlogo.png" alt="PLM CN Logo" />
+      <div>
+         <div style="font-weight:600; color:var(--gold); font-size: 16px">Pamantasan ng Lungsod ng Maynila</div>
+        <div style="font-size: 12px;">College of Nursing — Off the Shelf Project</div>
+      </div>
+    </div>
+    <div style= "font-size: 12px;">Prototype version — created by PLM Nursing Developers</div>
+  </div>
+</footer>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-container">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <img src="cnlogo.png" alt="Loading" />
+  </div>
+</div>
+
+<script>
+  // Loader function
+  function startLoading(targetPage) {
+    const loader = document.getElementById("loader");
+    loader.style.display = "flex";
+    setTimeout(() => {
+      window.location.href = targetPage;
+    }, 3000);
+  }
+
+  // Apply loader to all nav links
+  document.querySelectorAll("nav a").forEach(link => {
+    link.addEventListener("click", function(e) {
+      e.preventDefault();
+      const target = this.getAttribute("href");
+      startLoading(target);
+    });
+  });
+</script>
+</body>
+</html>
